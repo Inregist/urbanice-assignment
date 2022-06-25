@@ -1,8 +1,9 @@
 import { Group } from '../../../models/Group.model';
 import { v4 as uuidV4 } from 'uuid';
 import { z } from 'zod';
+import ContactGroupService from './ContactGroupService';
 
-const groups: Group[] = [];
+const groups: Group[] = [{ id: 'other', groupName: 'Other' }];
 
 const ID = z.string();
 
@@ -22,7 +23,10 @@ const GroupService = {
     return groups.find((g) => id === g.id);
   },
   update: (id: string, newGroup: Group) => {
-    ID.parse(id);
+    ID.refine((gid) => gid !== 'other', {
+      message: 'group name "Other" is reserved',
+    }).parse(id);
+
     if (!groups.find((c) => id === c.id)) {
       return null;
     }
@@ -38,10 +42,17 @@ const GroupService = {
     return groups[index];
   },
   delete: (id: string) => {
-    ID.parse(id);
+    ID.refine((gid) => gid !== 'other', {
+      message: 'group name "Other" is reserved',
+    }).parse(id);
     if (!groups.find((g) => id === g.id)) {
       return null;
     }
+
+    if ((ContactGroupService.listByGroup(id)?.contacts?.length ?? 0) > 0) {
+      throw new Error('group is not empty');
+    }
+
     const index = groups.findIndex((c) => c.id === id);
     groups.splice(index, 1);
 

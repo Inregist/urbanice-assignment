@@ -1,6 +1,7 @@
 import { Contact } from '../../../models/Contact.model';
 import { v4 as uuidV4 } from 'uuid';
 import { z } from 'zod';
+import ContactGroupService from './ContactGroupService';
 
 const contacts: Contact[] = [];
 
@@ -10,6 +11,12 @@ const ContactService = {
   create: (newContact: Contact) => {
     newContact.id = uuidV4();
     Contact.parse(newContact);
+
+    newContact.groupId = newContact.groupId ?? 'other';
+    ContactGroupService.create({
+      contactId: newContact.id,
+      groupId: newContact.groupId,
+    });
 
     contacts.push(newContact);
     return newContact;
@@ -29,6 +36,10 @@ const ContactService = {
 
     Contact.omit({ id: true }).partial().parse(newContact);
 
+    if (newContact.groupId) {
+      ContactGroupService.update(id, newContact.groupId);
+    }
+
     const index = contacts.findIndex((c) => c.id === id);
     contacts[index] = {
       ...contacts[index],
@@ -42,6 +53,9 @@ const ContactService = {
     if (!contacts.find((c) => id === c.id)) {
       return null;
     }
+
+    ContactGroupService.delete(id);
+
     const index = contacts.findIndex((c) => c.id === id);
     contacts.splice(index, 1);
 

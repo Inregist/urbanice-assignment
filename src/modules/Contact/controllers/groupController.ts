@@ -11,9 +11,9 @@ GroupRouter.get('/groups', (_, res) => {
 GroupRouter.get('/groups/:id', (req, res) => {
   try {
     const { id } = req.params;
-    const contact = GroupService.findById(id);
+    const group = GroupService.findById(id);
 
-    if (contact) res.json(contact);
+    if (group) res.json(group);
     else res.status(404).json({ error: `group not found` });
   } catch (error) {
     handleCommonControllerError(error, res);
