@@ -2,6 +2,7 @@ import { Contact } from '../../../models/Contact.model';
 import { v4 as uuidV4 } from 'uuid';
 import { z } from 'zod';
 import ContactGroupService from './ContactGroupService';
+import config from '../../../config/config';
 
 const contacts: Contact[] = [];
 
@@ -9,7 +10,12 @@ const ID = z.string();
 
 const ContactService = {
   create: (newContact: Contact) => {
-    newContact.id = uuidV4();
+    if (config.mockContact) {
+      newContact.id = newContact.id ?? uuidV4();
+    } else {
+      newContact.id = uuidV4();
+    }
+
     Contact.parse(newContact);
 
     newContact.groupId = newContact.groupId ?? 'other';

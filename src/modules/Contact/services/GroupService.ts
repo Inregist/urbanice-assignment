@@ -2,6 +2,7 @@ import { Group } from '../../../models/Group.model';
 import { v4 as uuidV4 } from 'uuid';
 import { z } from 'zod';
 import ContactGroupService from './ContactGroupService';
+import config from '../../../config/config';
 
 const groups: Group[] = [{ id: 'other', groupName: 'Other' }];
 
@@ -9,7 +10,11 @@ const ID = z.string();
 
 const GroupService = {
   create: (newGroup: Group) => {
-    newGroup.id = uuidV4();
+    if (config.mockContact) {
+      newGroup.id = newGroup.id ?? uuidV4();
+    } else {
+      newGroup.id = uuidV4();
+    }
     Group.parse(newGroup);
 
     groups.push(newGroup);
