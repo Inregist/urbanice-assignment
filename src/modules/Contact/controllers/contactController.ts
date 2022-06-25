@@ -1,6 +1,4 @@
-import { Router, Request } from 'express';
-import { ZodError } from 'zod';
-import { Contact } from '../../../models/Contact.model';
+import { Router } from 'express';
 import { handleCommonControllerError } from '../../../utils/errorHandler';
 import { ContactService } from '../services';
 
