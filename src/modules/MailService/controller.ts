@@ -6,8 +6,8 @@ const MailServiceController = Router();
 
 MailServiceController.post('/', async (req, res) => {
   try {
-    await NM_MailService.send(req.body);
-    res.json({ message: 'message has been sent' });
+    const result = await NM_MailService.send(req.body);
+    res.json(result);
   } catch (error) {
     handleCommonControllerError(error, res);
   }
