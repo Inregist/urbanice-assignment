@@ -43,7 +43,7 @@ const ContactService = {
       return null;
     }
     const index = contacts.findIndex((c) => c.id === id);
-    contacts.splice(index);
+    contacts.splice(index, 1);
 
     return id;
   },

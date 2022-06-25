@@ -43,7 +43,7 @@ const GroupService = {
       return null;
     }
     const index = groups.findIndex((c) => c.id === id);
-    groups.splice(index);
+    groups.splice(index, 1);
 
     return id;
   },
