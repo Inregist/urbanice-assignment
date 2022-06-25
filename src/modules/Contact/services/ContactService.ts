@@ -4,9 +4,7 @@ import { z } from 'zod';
 
 const contacts: Contact[] = [];
 
-const ID = z.string().refine((_id) => ContactService.findById(_id), {
-  message: `contact not exists`,
-});
+const ID = z.string();
 
 const ContactService = {
   create: (newContact: Contact) => {
@@ -25,6 +23,10 @@ const ContactService = {
   },
   update: (id: string, newContact: Contact) => {
     ID.parse(id);
+    if (!contacts.find((c) => id === c.id)) {
+      return null;
+    }
+
     Contact.omit({ id: true }).partial().parse(newContact);
 
     const index = contacts.findIndex((c) => c.id === id);
@@ -37,10 +39,13 @@ const ContactService = {
   },
   delete: (id: string) => {
     ID.parse(id);
+    if (!contacts.find((c) => id === c.id)) {
+      return null;
+    }
     const index = contacts.findIndex((c) => c.id === id);
     contacts.splice(index);
 
-    return true;
+    return id;
   },
 };
 

@@ -5,6 +5,6 @@ export const handleCommonControllerError = (error: any, res: Response) => {
   if (error instanceof ZodError) {
     res.status(400).json(error.flatten());
   } else {
-    res.sendStatus(500);
+    res.status(500).json(error);
   }
 };

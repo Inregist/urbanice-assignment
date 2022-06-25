@@ -11,7 +11,10 @@ ContactRouter.get('/contacts', (_, res) => {
 ContactRouter.get('/contacts/:id', (req, res) => {
   try {
     const { id } = req.params;
-    res.json(ContactService.findById(id));
+    const contact = ContactService.findById(id);
+
+    if (contact) res.json(contact);
+    else res.status(404).json({ error: `contact not found` });
   } catch (error) {
     handleCommonControllerError(error, res);
   }
@@ -28,7 +31,10 @@ ContactRouter.post('/contacts', (req, res) => {
 ContactRouter.put('/contacts/:id', (req, res) => {
   try {
     const { id } = req.params;
-    res.json(ContactService.update(id, req.body));
+    const contact = ContactService.update(id, req.body);
+
+    if (contact) res.json(contact);
+    else res.status(404).json({ error: `contact not found` });
   } catch (error) {
     handleCommonControllerError(error, res);
   }
@@ -37,7 +43,10 @@ ContactRouter.put('/contacts/:id', (req, res) => {
 ContactRouter.delete('/contacts/:id', (req, res) => {
   try {
     const { id } = req.params;
-    res.json(ContactService.delete(id));
+    const contactId = ContactService.delete(id);
+
+    if (contactId) res.json({ id: contactId });
+    else res.status(404).json({ error: `contact not found` });
   } catch (error) {
     handleCommonControllerError(error, res);
   }
