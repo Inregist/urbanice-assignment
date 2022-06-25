@@ -28,7 +28,7 @@ ContactRouter.post('/contacts', (req, res) => {
   }
 });
 
-ContactRouter.put('/contacts/:id', (req, res) => {
+ContactRouter.patch('/contacts/:id', (req, res) => {
   try {
     const { id } = req.params;
     const contact = ContactService.update(id, req.body);

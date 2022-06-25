@@ -28,7 +28,7 @@ GroupRouter.post('/groups', (req, res) => {
   }
 });
 
-GroupRouter.put('/groups/:id', (req, res) => {
+GroupRouter.patch('/groups/:id', (req, res) => {
   try {
     const { id } = req.params;
     const group = GroupService.update(id, req.body);
