@@ -2,15 +2,15 @@ import sg from '@sendgrid/mail';
 import { z } from 'zod';
 
 const MailMessage = z.object({
-  from: z.string().email(),
-  to: z.string().email(),
+  from: z.string(),
+  to: z.string(),
   message: z.string(),
   templateID: z.string().optional(),
 });
 
 type MailMessage = z.infer<typeof MailMessage>;
 
-const MailService = {
+const SG_MailService = {
   init: (apiKey: string) => {
     sg.setApiKey(apiKey);
   },
@@ -32,4 +32,4 @@ const MailService = {
   },
 };
 
-export default MailService;
+export default SG_MailService;

@@ -3,7 +3,7 @@ import helmet from 'helmet';
 import config from './config/config';
 import ContactController from './modules/Contact/controllers';
 import MailServiceController from './modules/MailService/controller';
-import { MailService } from './modules/MailService/services';
+import { NM_MailService } from './modules/MailService/services';
 import TaxController from './modules/TaxCalculator/controller';
 import ContactMocker from './utils/contactMocker';
 
@@ -12,7 +12,10 @@ const app = express();
 app.use(helmet());
 app.use(express.json());
 
-MailService.init(config.sendGridApiKey);
+NM_MailService.init({
+  user: config.nodemailer.user,
+  pass: config.nodemailer.pass,
+});
 
 if (config.mockContact) {
   console.log('mocking groups...');
