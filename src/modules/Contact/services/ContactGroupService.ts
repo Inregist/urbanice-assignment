@@ -31,7 +31,7 @@ const ContactGroupService = {
     return newContactGroup;
   },
   list: () => {
-    const groupDict = _.chain(GroupService.list()).keyBy('groupId').value();
+    const groupDict = _.chain(GroupService.list()).keyBy('id').value();
 
     const contactGroupResult = _.chain(ContactService.list())
       .groupBy('groupId')
@@ -67,7 +67,7 @@ const ContactGroupService = {
     return contactGroupResult;
   },
   update: (contactId: string, newGroupId: string) => {
-    ID.refine((gid) => GroupService.findById(gid), {
+    ID.refine((cid) => ContactService.findById(cid), {
       message: 'contact not found',
     }).parse(contactId);
 
