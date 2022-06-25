@@ -10,14 +10,9 @@ const ID = z.string();
 
 const CreateContactGroupInput = z.object({
   contactId: z.string(),
-  groupId: z
-    .string()
-    .refine(
-      (gid) => contactGroups.find((cg: ContactGroup) => cg.groupId === gid),
-      {
-        message: `group id does not exists`,
-      }
-    ),
+  groupId: z.string().refine((gid) => GroupService.findById(gid), {
+    message: `group id does not exists`,
+  }),
 });
 
 const ContactGroupResult = z.object({
