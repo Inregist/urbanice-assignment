@@ -12,4 +12,5 @@ const resolveBoolean = (value?: string, defaultValue?: boolean) => {
 export default {
   port: process.env.PORT ?? 4500,
   mockContact: resolveBoolean(process.env.MOCK_CONTACT, false),
+  sendGridApiKey: process.env.SENDGRID_API_KEY ?? '',
 };
