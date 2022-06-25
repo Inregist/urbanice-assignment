@@ -50,6 +50,7 @@ const GroupService = {
     ID.refine((gid) => gid !== 'other', {
       message: 'group name "Other" is reserved',
     }).parse(id);
+
     if (!groups.find((g) => id === g.id)) {
       return null;
     }
