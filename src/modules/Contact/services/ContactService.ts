@@ -10,6 +10,7 @@ const ID = z.string();
 
 const ContactService = {
   create: (newContact: Contact) => {
+    //For mock purpose only, should not implement this in production
     if (config.mockContact) {
       newContact.id = newContact.id ?? uuidV4();
     } else {

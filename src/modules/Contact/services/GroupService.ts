@@ -10,6 +10,7 @@ const ID = z.string();
 
 const GroupService = {
   create: (newGroup: Group) => {
+    //For mock purpose only, should not implement this in production
     if (config.mockContact) {
       newGroup.id = newGroup.id ?? uuidV4();
     } else {
